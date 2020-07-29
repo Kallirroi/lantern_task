@@ -1,7 +1,8 @@
 import React, {useState }from 'react';
 import './App.css';
 
-import { Typography, Space, Button } from 'antd';
+import { Typography, Button } from 'antd';
+import {useGeolocation} from 'react-use';
 
 const { Text, Link, Title } = Typography;
 
@@ -12,21 +13,15 @@ function App() {
     base: `https://api.openweathermap.org/data/2.5/onecall`
   }
 
-  const coordinates = { //dummy coordinates for now
-    lat: `40.12`,
-    long: `-96.66`
-  }
-
-  const [request, setRequest] = useState('');
-  const [results, setResults] = useState({});
+  const [result, setResult] = useState({});
+  const {loading, latitude, longitude} = useGeolocation();
 
   function handleClick(e) {
     e.preventDefault()
-    console.log('fetching')
-    fetch(`${api.base}?lat=${coordinates.lat}&lon=${coordinates.long}&appid=${api.key}`)
+    fetch(`${api.base}?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
         .then(res => res.json())
         .then(result => {
-          console.log(result)
+          setResult(result)
         })
         .catch(error => console.log(error))
   }
@@ -35,18 +30,19 @@ function App() {
     <div className="App">
         <Title>OpenWeather app</Title>
         
-        <Space direction="vertical">
+        <div>
           <Text>A simple weather app that geolocates you and fetches the weather forecast using the <Link href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link></Text>
-        </Space>
+        </div>
 
-        <Space direction="vertical">
-          <Button 
-            type="primary"
-            onClick={handleClick}
-            >
-            Fetch dummy data
-          </Button>
-        </Space>
+        <Button 
+          type="primary"
+          onClick={handleClick}
+          loading={loading}
+          >
+          {loading ? 'Fetching your browser location...' : 'Get weather'}
+        </Button>
+
+
     </div>
   );
 }
