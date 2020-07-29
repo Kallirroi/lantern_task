@@ -8,6 +8,7 @@ const { Text, Title } = Typography;
 
 function SearchResult({result, api}) {
 
+  // A function that receives a string and capitalizes its first character
   const capitalize = ([first,...rest]) => first.toUpperCase() + rest.join('').toLowerCase();
   
   return (
@@ -20,8 +21,16 @@ function SearchResult({result, api}) {
       <Meta
         title={
           <>
+            {/* ----------- Location ----------- */}
             {result.name}
-            <div style={{fontSize: '1rem', color: '#aaa', fontWeight: 'normal'}}>
+
+            {/* ----------- Coordinates ----------- */}
+            <div 
+              style={{
+                fontSize: '1rem', 
+                color: '#aaa', 
+                fontWeight: 'normal'
+              }}>
               {result.coord.lon}, {result.coord.lat}
             </div>
           </>
@@ -30,16 +39,19 @@ function SearchResult({result, api}) {
         description={
           result.weather && 
             <>
+              {/* ----------- Icon ----------- */}
               <Avatar 
                 shape="square" 
                 size="large" 
                 src={`${api.icon}${result.weather[0].icon}@2x.png`}/>
 
+              {/* ----------- Description field ----------- */}
               <Title 
                 level={3}>
                 {capitalize(result.weather[0].description)}
               </Title>
               
+              {/* ----------- Main data ----------- */}
               <Text>
                 {Object.keys(result.main).map(fieldKey=> 
                   <li key={fieldKey}>
@@ -48,6 +60,7 @@ function SearchResult({result, api}) {
                 )}
               </Text>
 
+              {/* ----------- Wind data ----------- */}
               <Text>
                 {Object.keys(result.wind).map(fieldKey=> 
                   <li key={fieldKey}>

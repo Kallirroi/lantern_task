@@ -39,17 +39,26 @@ function App() {
   return (
     <div className="App">
       <Layout style={{ minHeight: '100vh' }}>
+        
         {/* ----------- TOP ----------- */}
         <Top />
+
         {/* ----------- MAIN CONTENT ----------- */}
         <Content style={{ background: '#fff'}}>      
 
           <div style={{ margin: '5vh 0'}}>
-            <Text>A barebones weather app built on the <Link style={{color: '#00f'}} href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link>.
+            <Text>
+              A barebones weather app built on the 
+              <Link 
+                style={{color: '#00f'}} 
+                href="https://openweathermap.org/api/one-call-api" 
+                target="_blank">
+                OpenWeather API
+             </Link>.
             </Text>
-
           </div>
 
+          {/* Search bar and button */}
           <Search
             ref={searchRef}
             placeholder="Look up a location"
@@ -71,6 +80,7 @@ function App() {
             />
           }
 
+          {/* Renders placeholder icon */}
           {!result.weather &&
             <div
               style={{
