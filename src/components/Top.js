@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography, Layout} from 'antd';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 const { Header} = Layout;
 
 function Top() {

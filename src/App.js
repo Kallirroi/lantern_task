@@ -7,8 +7,8 @@ import Bottom from './components/Bottom'
 import { Typography, Layout, Input, Alert} from 'antd';
 import './App.css';
 
-const { Text, Link, Title } = Typography;
-const { Header, Footer, Content } = Layout;
+const { Text, Link } = Typography;
+const { Content } = Layout;
 const { Search } = Input;
 
 function App() {
@@ -60,7 +60,7 @@ function App() {
               width: 350
             }}
           />
-          
+
           {/* Checking whether we have received an error back from the API */}
           {result.cod === '404' && 
             <Alert
