@@ -4,6 +4,6 @@ A CRA (create-react-app) frontend that allows the user to enter a location and b
 
 
 ### Process - React
-OpenWeather is pretty easy to sign up for, and all membership options use ["One Call API"](https://openweathermap.org/api/one-call-api) which looks like an updated API that bundles current, minute, hourly, daily and some historical data all in one. Great!
+OpenWeather is pretty easy to sign up for, and offers many options (one location, multiple locations, multiple forecasts etc). We are going with [Current weather data](https://openweathermap.org/current).
 
-**Note - I am not going to remove the API key since they limit the number of calls one can make on the free plan anyways. If that wasn't the case I would use a package like `dotenv` to set up an `.env` file with global variables. 
+**Note - I am not going to remove the API key from the committed code since they limit the number of calls one can make on the free plan anyways. If that wasn't the case I would use a package like `dotenv` to set up an `.env` file with global variables.

@@ -1,33 +1,33 @@
 import React, {useState }from 'react';
 import {useGeolocation} from 'react-use';
 
+import { Typography, Button, Layout, Input, Card, Avatar} from 'antd';
 import './App.css';
-import { Typography, Button, Layout } from 'antd';
-import { Card, Avatar } from 'antd';
 
 const { Text, Link, Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const { Meta } = Card;
+const { Search } = Input;
 
 function App() {
 
   const api = {
     key: `f87be23187f2caeeb062a2c01d2c85bd`,
-    base: `https://api.openweathermap.org/data/2.5/onecall`, 
+    base: `https://api.openweathermap.org/data/2.5/weather`,
     icon: `http://openweathermap.org/img/wn/`
   }
 
   const [result, setResult] = useState({});
-  const [city, setCity] = useState('')
-  const {loading, latitude, longitude} = useGeolocation();
+  const [loading, setLoading] = useState(false)
+  // const {loading, latitude, longitude} = useGeolocation();
 
-  function handleClick(e) {
-    e.preventDefault()
-    fetch(`${api.base}?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
+  function fetchAPI(city) {
+    setLoading(true)
+    fetch(`${api.base}?q=${city}&appid=${api.key}`)
         .then(res => res.json())
         .then(result => {
           setResult(result)
-          setCity(result.timezone.split('/')[1])
+          setLoading(false)
         })
         .catch(error => console.log(error))
   }
@@ -45,31 +45,28 @@ function App() {
             <Text style={{margin: '2vh 0'}}>A simple weather app using the <Link href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link>.</Text>
           </div>
 
-          <Button 
-            style={{margin: '2vh 0'}}
-            type="default"
-            onClick={handleClick}
-            loading={loading}
-            >
-            {loading ? 'Fetching your browser location...' : 'Get local weather'}
-          </Button>
+
+          <div>
+            <Search
+              placeholder="Look up a location"
+              enterButton="Get weather"
+              onSearch={fetchAPI}
+              loading={loading}
+              style={{ width: 300, margin: '0 1vw'}}
+            />
+          </div>
           
-          {city === '' 
-            ? null 
-            : 
-            <>
-              <Card style={{ width: 250, margin: '0 auto'}}>
-                <Meta
-                  avatar={
-                    <Avatar src={`${api.icon}${result.current.weather[0].icon}@2x.png`}/>
-                  }
-                  title={city}
-                  description={result.current.weather[0].description}
-                />
-              </Card>
-            </>
+          {result.weather && 
+            <Card style={{ width: 250, margin: '0 auto'}}>
+              <Meta
+                avatar={
+                  result.weather && <Avatar src={`${api.icon}${result.weather[0].icon}@2x.png`}/>
+                }
+                title={result.name}
+                description={result.weather && result.weather[0].description}
+              />
+            </Card>
           }
-          
 
         </Content>
 
