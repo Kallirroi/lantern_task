@@ -21,9 +21,9 @@ function SearchResult({result, api}) {
         title={
           <>
             {result.name}
-            <Text style={{fontSize: '1rem'}}>
+            <div style={{fontSize: '1rem', color: '#aaa', fontWeight: 'normal'}}>
               {result.coord.lon}, {result.coord.lat}
-            </Text>
+            </div>
           </>
         }
 
