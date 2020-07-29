@@ -3,3 +3,13 @@
 .App {
 	text-align: center;
 }
+
+button.ant-btn.ant-input-search-button.ant-btn-primary {
+	color: #00f;
+	border-color: #00f;
+	background: none;
+}
+
+.ant-input-search-enter-button input:hover, .ant-input-search-enter-button input:focus {
+    border-color: #aaa;
+}

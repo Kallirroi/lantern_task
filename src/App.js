@@ -1,12 +1,14 @@
-import React, {useState, useRef}from 'react';
-import {useGeolocation} from 'react-use';
+import React, {useState, useRef} from 'react';
 
-import { Typography, Layout, Input, Card, Avatar, Alert, Divider} from 'antd';
+import SearchResult from './components/SearchResult'
+import Top from './components/Top'
+import Bottom from './components/Bottom'
+
+import { Typography, Layout, Input, Alert} from 'antd';
 import './App.css';
 
 const { Text, Link, Title } = Typography;
 const { Header, Footer, Content } = Layout;
-const { Meta } = Card;
 const { Search } = Input;
 
 function App() {
@@ -30,83 +32,53 @@ function App() {
             setResult(result)
             setLoading(false)
           })
-      searchRef.current.value = ''
+      searchRef.current.setValue('')
     }
   }
 
   return (
     <div className="App">
       <Layout style={{ minHeight: '100vh' }}>
+        {/* ----------- TOP ----------- */}
+        <Top />
 
-        <Header style={{background: '#e9fef3', paddingTop: '2vh'}}>
-          <Title level={3}>OpenWeather app</Title>
-        </Header>
-          
-        <Content style={{background: '#fff'}}>
+        {/* ----------- MAIN CONTENT ----------- */}
+        <Content style={{ background: '#fff'}}>
 
-          <div style={{margin: '5vh 0'}}>
-            <Text style={{margin: '2vh 0'}}>A simple weather app using the <Link href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link>.</Text>
+          <div style={{ margin: '5vh 0'}}>
+            <Text>A barebones weather app built on the <Link style={{color: '#00f'}} href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link>.
+            </Text>
           </div>
-
 
           <Search
             ref={searchRef}
             placeholder="Look up a location"
-            enterButton="Get weather"
+            enterButton="Get current weather"
             onSearch={fetchAPI}
             loading={loading}
-            style={{ width: 300, margin: '0 1vw'}}
+            style={{ 
+              width: 350
+            }}
           />
           
+          {/* Checking whether we have received an error back from the API */}
           {result.cod === '404' && 
             <Alert
-              style={{ width: 300, margin: '5vh auto'}}
+              style={{ width: 350, margin: '5vh auto'}}
               message={`Error: ${result.message}`}
               type='error'
               closable
             />
           }
 
+          {/* If we have the data, render it using SearchResult component */}
           {result.weather && 
-            <Card style={{ width: 300, margin: '5vh auto'}}>
-              <Meta
-                avatar={
-                  result.weather && <Avatar src={`${api.icon}${result.weather[0].icon}@2x.png`}/>
-                }
-                title={
-                  <>
-                    {result.name}
-                    <div style={{fontSize: '1rem'}}>{result.coord.lon}, {result.coord.lat}</div>
-                  </>
-                }
-                description={result.weather && 
-                  <>
-                    <Title level={3}>{result.weather[0].description}</Title>
-
-                    <Text>
-                      {Object.keys(result.main).map(fieldKey=> 
-                        <li key={fieldKey}>{fieldKey}: {result.main[fieldKey]}</li>
-                        )}
-                    </Text>
-
-                    <Text>
-                      {Object.keys(result.wind).map(fieldKey=> 
-                        <li key={fieldKey}>wind {fieldKey}: {result.wind[fieldKey]}</li>
-                        )}
-                    </Text>
-
-                    
-                  </>
-                }
-              />
-            </Card>
+            <SearchResult result={result} api={api}/>
           }
-
-
-
         </Content>
 
-        <Footer style={{background: '#e9fef3'}}>Made by Kalli using OpenWeather API and the ant.d design language.</Footer>
+        {/* ----------- FOOTER ----------- */}
+        <Bottom />
 
       </Layout>
     </div>
