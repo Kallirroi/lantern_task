@@ -4,7 +4,7 @@ import SearchResult from './components/SearchResult'
 import Top from './components/Top'
 import Bottom from './components/Bottom'
 
-import { Typography, Layout, Input, Alert} from 'antd';
+import { Typography, Layout, Input, Alert, Avatar} from 'antd';
 import './App.css';
 
 const { Text, Link } = Typography;
@@ -41,13 +41,13 @@ function App() {
       <Layout style={{ minHeight: '100vh' }}>
         {/* ----------- TOP ----------- */}
         <Top />
-
         {/* ----------- MAIN CONTENT ----------- */}
-        <Content style={{ background: '#fff'}}>
+        <Content style={{ background: '#fff'}}>      
 
           <div style={{ margin: '5vh 0'}}>
             <Text>A barebones weather app built on the <Link style={{color: '#00f'}} href="https://openweathermap.org/api/one-call-api" target="_blank">OpenWeather API</Link>.
             </Text>
+
           </div>
 
           <Search
@@ -69,6 +69,19 @@ function App() {
               type='error'
               closable
             />
+          }
+
+          {!result.weather &&
+            <div
+              style={{
+                margin: '10vh auto'}}
+              >
+              <Avatar 
+                shape="square" 
+                size="large" 
+                src={'sun.png'}
+                />
+            </div>
           }
 
           {/* If we have the data, render it using SearchResult component */}
