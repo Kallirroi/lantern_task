@@ -8,7 +8,7 @@ OpenWeather is pretty easy to sign up for, and offers many options (one location
 
 *Note - I am not going to remove the API key from the committed code since they limit the number of calls one can make on the free plan anyways. If that wasn't the case I would use a package like `dotenv` to set up an `.env` file with global variables.*
 
-Basic characteristics:
+Basic characteristics (you can see more details about my to-do process in the [Projects page](https://github.com/Kallirroi/lantern_task/projects/1)):
 - Fetches the current weather data for a given city using the API 
 - Handles empty search strings
 - Handles errors by displaying an error modal (in case the city wasn't found)
