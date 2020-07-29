@@ -48,8 +48,7 @@ function App() {
 
           <div style={{ margin: '5vh 0'}}>
             <Text>
-              A barebones weather app built on the 
-              <Link 
+              A barebones weather app built on the <Link 
                 style={{color: '#00f'}} 
                 href="https://openweathermap.org/api/one-call-api" 
                 target="_blank">

@@ -10,7 +10,8 @@ function Top() {
     <Header 
     	style={{
     		background: "#fff", 
-    		paddingTop: '3vh'
+    		paddingTop: '5vh',
+        height: '10vh'
     	}}>
       <Title 
       	level={2} 
