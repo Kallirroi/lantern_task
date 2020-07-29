@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types"
+import {capitalize, convertKtoF} from '../utils'
 
 import { Typography, Card, Avatar} from 'antd';
 
@@ -8,9 +9,6 @@ const { Text, Title } = Typography;
 
 function SearchResult({result, api}) {
 
-  // A function that receives a string and capitalizes its first character
-  const capitalize = ([first,...rest]) => first.toUpperCase() + rest.join('').toLowerCase();
-  
   return (
     <Card 
       style={{ 
@@ -53,15 +51,17 @@ function SearchResult({result, api}) {
               
               {/* ----------- Main data ----------- */}
               <Text>
-                {Object.keys(result.main).map(fieldKey=> 
+                {/*  Iterate over {result.main} */}
+                {Object.keys(result.main).map((fieldKey, index)=> 
                   <li key={fieldKey}>
-                    {capitalize(fieldKey.replace('_', ' '))}: {result.main[fieldKey]}
+                    {capitalize(fieldKey.replace('_', ' '))} : {index < 4 ? convertKtoF(result.main[fieldKey]) : result.main[fieldKey]}
                   </li>
                 )}
               </Text>
 
               {/* ----------- Wind data ----------- */}
               <Text>
+                {/*  Iterate over {result.wind} */}
                 {Object.keys(result.wind).map(fieldKey=> 
                   <li key={fieldKey}>
                     Wind {fieldKey}: {result.wind[fieldKey]}
