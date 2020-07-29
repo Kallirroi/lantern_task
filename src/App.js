@@ -1,7 +1,7 @@
-import React, {useState }from 'react';
+import React, {useState, useRef}from 'react';
 import {useGeolocation} from 'react-use';
 
-import { Typography, Button, Layout, Input, Card, Avatar} from 'antd';
+import { Typography, Button, Layout, Input, Card, Avatar, Alert} from 'antd';
 import './App.css';
 
 const { Text, Link, Title } = Typography;
@@ -19,25 +19,27 @@ function App() {
 
   const [result, setResult] = useState({});
   const [loading, setLoading] = useState(false)
-  // const {loading, latitude, longitude} = useGeolocation();
+  const searchRef = useRef(null)
 
   function fetchAPI(city) {
-    setLoading(true)
-    fetch(`${api.base}?q=${city}&appid=${api.key}`)
-        .then(res => res.json())
-        .then(result => {
-          setResult(result)
-          setLoading(false)
-        })
-        .catch(error => console.log(error))
+    if (city!=='') {
+      setLoading(true)
+      fetch(`${api.base}?q=${city}&appid=${api.key}`)
+          .then(res => res.json())
+          .then(result => {
+            setResult(result)
+            setLoading(false)
+          })
+      searchRef.current.value = ''
+    }
   }
 
   return (
     <div className="App">
       <Layout style={{ minHeight: '100vh' }}>
 
-        <Header style={{background: '#bed4db', paddingTop: '1vh'}}>
-          <Title level={2}>OpenWeather app</Title>
+        <Header style={{background: '#e9fef3', paddingTop: '2vh'}}>
+          <Title level={3}>OpenWeather app</Title>
         </Header>
           
         <Content style={{background: '#fff'}}>
@@ -48,6 +50,7 @@ function App() {
 
           <div>
             <Search
+              ref={searchRef}
               placeholder="Look up a location"
               enterButton="Get weather"
               onSearch={fetchAPI}
@@ -56,6 +59,15 @@ function App() {
             />
           </div>
           
+          {result.cod == '404' && 
+            <Alert
+              style={{ width: 300, margin: '2vh auto'}}
+              message={`Error: ${result.message}`}
+              type='error'
+              closable
+            />
+          }
+
           {result.weather && 
             <Card style={{ width: 250, margin: '0 auto'}}>
               <Meta
@@ -63,14 +75,21 @@ function App() {
                   result.weather && <Avatar src={`${api.icon}${result.weather[0].icon}@2x.png`}/>
                 }
                 title={result.name}
-                description={result.weather && result.weather[0].description}
+                description={result.weather && 
+                  <>
+                    <Title level={3}>{result.weather[0].description}</Title>
+                    <div>{Object.keys(result.main).map(fieldKey=> <li key={fieldKey}>{fieldKey}:{result.main[fieldKey]}</li>)}</div>
+                  </>
+                }
               />
             </Card>
           }
 
+
+
         </Content>
 
-        <Footer style={{background: '#bed4db'}}>Made by Kalli using OpenWeather API and the ant.d design language.</Footer>
+        <Footer style={{background: '#e9fef3'}}>Made by Kalli using OpenWeather API and the ant.d design language.</Footer>
 
       </Layout>
     </div>
