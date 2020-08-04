@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Typography, Layout} from 'antd';
+import {Typography, Layout} from 'antd';
 
 const { Title } = Typography;
-const { Header} = Layout;
+const { Header } = Layout;
 
 function Top() {
   return (

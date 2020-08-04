@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Typography, Layout} from 'antd';
+import { Typography, Layout } from 'antd';
 
 const { Text } = Typography;
-const { Footer} = Layout;
+const { Footer } = Layout;
 
 function Bottom() {
   return (
