@@ -41,4 +41,5 @@ Basic characteristics (you can see more details about my to-do process in the [P
 ### Process - UX/UI
 Using a design system has the upside of providing full responsiveness out of the box, but the downside of locking us into their own UI patterns. I have been using `ant.d` for a few projects and I know my way around it - I have no reason to believe its better than the other existing systems. I have tried minimally styling the components, and I am doing it inline for the ones that do need it (with the exception of hover effects which are described in `App.css`). 
 
-I will upload a set of Figma sketches I made soon.
+I decided to design mobile-first since I have the tendency to check the weather on my phone. Here is a screenshot of my Figma file with some basic progression from mockups to finer-tuned screen.
+![Figma screenshot](https://user-images.githubusercontent.com/10440556/88853138-48492a00-d1bd-11ea-8ae7-8da89261c487.png)
